@@ -27,7 +27,7 @@ func main() {
 		},
 	}
 	//2,3,3,4,5,null,4
-	println((r))
+	println(isSymmetric(r))
 }
 
 type TreeNode struct {
@@ -36,18 +36,13 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func maxDepth(root *TreeNode) int {
-	return depth(root, 0)
-}
+func isSameTree(p *TreeNode, q *TreeNode) bool {
+	if p == nil || q == nil {
+		return p == q
+	}
 
-func depth(root *TreeNode, d int) int {
-	if root == nil {
-		return d
-	}
-	l := depth(root.Left, d+1)
-	r := depth(root.Right, d+1)
-	if l > r {
-		return l
-	}
-	return r
+	return p.Val == q.Val && isSameTree(p.Right, q.Left) && isSameTree(p.Left, q.Right)
+}
+func isSymmetric(root *TreeNode) bool {
+	return isSameTree(root.Left, root.Right)
 }
