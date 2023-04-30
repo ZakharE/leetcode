@@ -1,33 +1,8 @@
 package main
 
 func main() {
-	r := &TreeNode{
-		Val: 2,
-		Left: &TreeNode{
-			Val: 3,
-			Left: &TreeNode{
-				Val:   4,
-				Left:  nil,
-				Right: nil,
-			},
-			Right: &TreeNode{
-				Val:   5,
-				Left:  nil,
-				Right: nil,
-			},
-		},
-		Right: &TreeNode{
-			Val:  3,
-			Left: nil,
-			Right: &TreeNode{
-				Val:   4,
-				Left:  nil,
-				Right: nil,
-			},
-		},
-	}
-	//2,3,3,4,5,null,4
-	println((r))
+	bst := sortedArrayToBST([]int{1, 2, 3})
+	println(bst)
 }
 
 type TreeNode struct {
@@ -36,18 +11,14 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func maxDepth(root *TreeNode) int {
-	return depth(root, 0)
-}
+func sortedArrayToBST(nums []int) *TreeNode {
+	if len(nums) == 1 {
+		return &TreeNode{Val: nums[0]}
+	}
+	middle := len(nums) / 2
+	node := &TreeNode{Val: nums[middle]}
 
-func depth(root *TreeNode, d int) int {
-	if root == nil {
-		return d
-	}
-	l := depth(root.Left, d+1)
-	r := depth(root.Right, d+1)
-	if l > r {
-		return l
-	}
-	return r
+	node.Left = sortedArrayToBST(nums[0:middle])
+	node.Right = sortedArrayToBST(nums[middle+1:])
+	return node
 }
